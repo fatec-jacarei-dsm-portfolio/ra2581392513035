@@ -6,5 +6,5 @@
 ---
 
 ### Portfólio Online  
-🔗 [Acesse o Portfólio](https://matheussales95.github.io/Portfolio-2DSM/)
+🔗 [Acesse o Portfólio](https://github.com/fatec-jacarei-dsm-portfolio/ra2581392513035)
 🎤 [Pitch de Apresentação (vídeo)](https://youtu.be/dUQu7O4DJss)
