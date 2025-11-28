@@ -1,7 +1,7 @@
 # Portfólio de Projetos - Fatec Jacareí
 ### Aluno: Matheus Venancio Moreira Sales
 ### Curso: Desenvolvimento de Software Multiplataforma
-### Turma: 2DSM Semestre de 2025
+ ### Turma: 2º Semestre de 2025
  
 ---
 
