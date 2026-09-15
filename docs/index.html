@@ -4,62 +4,472 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfólio - Matheus Sales</title>
+    <meta name="description" content="Portfólio de Matheus Venancio Moreira Sales - Desenvolvimento de Software Multiplataforma na Fatec Jacareí e bolsista CNPq no INPE, com trabalho em geoprocessamento, dados ambientais e processamento de linguagem natural.">
+    <meta name="author" content="Matheus Venancio Moreira Sales">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Portfólio - Matheus Venancio Moreira Sales">
+    <meta property="og:description" content="Desenvolvimento de Software Multiplataforma na Fatec Jacareí e bolsista CNPq no INPE. Geoprocessamento, dados ambientais e processamento de linguagem natural.">
+    <meta property="og:image" content="https://fatec-jacarei-dsm-portfolio.github.io/ra2581392513035/assets/images/profile-placeholder.jpg">
+    <meta property="og:url" content="https://fatec-jacarei-dsm-portfolio.github.io/ra2581392513035/">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="twitter:card" content="summary">
+
+    <script>document.documentElement.classList.add('js-enabled');</script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a href="#hero" class="skip-link">Pular para o conteúdo</a>
+
     <header>
-        <nav>
-            <!-- Navegação futura -->
+        <nav aria-label="Navegação principal">
+            <ul class="nav-list">
+                <li><a href="#hero">Início</a></li>
+                <li><a href="#projects">Projetos</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#additional-info">Outras Informações</a></li>
+                <li><a href="#contact">Contatos</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
         <section id="hero" class="hero-section">
             <div class="profile-picture-container">
-                <img src="assets/images/profile-placeholder.jpg" alt="Foto de Perfil" class="profile-picture">
+                <img src="assets/images/profile-placeholder.jpg"
+                     alt="Retrato de Matheus Venancio Moreira Sales"
+                     class="profile-picture" width="800" height="800">
             </div>
             <div class="hero-content">
-                <h1>Olá, eu sou [Seu Nome]</h1>
-                <p class="summary-text">Aqui você pode adicionar um resumo mais detalhado sobre sua experiência, paixões e o que você busca profissionalmente. Mantenha-o conciso e impactante.</p>
+                <h1>Olá, eu sou Matheus Sales</h1>
+                <p class="tagline">Desenvolvedor de Sistemas &middot; Python, IA e Dados Geoespaciais</p>
+                <p class="summary-text">
+                    Desenvolvedor de sistemas com foco em Python e Inteligência Artificial, hoje
+                    bolsista CNPq no INPE, em São José dos Campos. Trabalho com processamento de
+                    linguagem natural — pipelines de pré-processamento, engenharia de atributos com
+                    TF-IDF e <em>word embeddings</em> —, busca semântica, chatbots e geração de
+                    relatórios com LLM, integrando regras de negócio a APIs REST em FastAPI e bancos
+                    relacionais. Minha entrada na tecnologia vem da ciência: sou biólogo pela UNIVAP,
+                    com especialização em Análises Clínicas pelo São Camilo e cerca de quatro anos de
+                    laboratório na DASA. É desse percurso que trago o rigor analítico e o método que
+                    aplico hoje ao software.
+                </p>
+                <div class="objectives">
+                    <h2>Áreas de interesse e objetivos</h2>
+                    <ul>
+                        <li>Machine learning, LLM e processamento de linguagem natural</li>
+                        <li>Busca semântica e geração automatizada de relatórios</li>
+                        <li>Geoprocessamento e ciência de dados geoespaciais</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
         <section id="projects" class="projects-section">
             <h2>Meus Projetos</h2>
+
+            <h3 class="project-group-title" id="projects-academic">Acadêmicos</h3>
             <div class="projects-grid">
-                <!-- Projetos serão adicionados via JavaScript -->
+
+                <article class="project-card">
+                    <p class="project-semester">1DSM – 1º Sem. 2025</p>
+                    <h4>Sistema web de consulta de horários</h4>
+                    <p class="project-description">
+                        Sistema web para que a comunidade acadêmica consulte os horários das aulas,
+                        com mapa interativo do campus e agenda.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MySQL</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Desenvolvimento do servidor e da camada de APIs do projeto</li>
+                            <li>Endpoints de busca de grades por turno e turma, da secretaria e da agenda</li>
+                            <li>API do mapa interativo do campus</li>
+                            <li>Rotas CRUD e filtros de busca</li>
+                            <li>Participação na modelagem e reconstrução do banco de dados</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/prjDevflow/prj_1sem_server" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Repositório (servidor)</a>
+                        <a href="https://github.com/prjDevflow/prj_1sem_client" class="project-link secondary"
+                           target="_blank" rel="noopener noreferrer">Repositório (cliente)</a>
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <p class="project-semester">2DSM – 2º Sem. 2025</p>
+                    <h4>Devflow Analytics</h4>
+                    <p class="project-description">
+                        Plataforma de visualização e análise de dados limnológicos e de balanço de
+                        carbono em reservatórios, desenvolvida para Furnas Centrais Elétricas S.A.
+                        em parceria com INPE, UFRJ, UFJF e IIE.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Material-UI</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Procedures do projeto BALCAR no PostgreSQL</li>
+                            <li>Procedures de agregação que alimentam os gráficos da plataforma</li>
+                            <li>Conclusão da API de backend para cada tipo de dado da base de Furnas</li>
+                            <li>Filtros, rotas e integração entre frontend e backend</li>
+                            <li>Ajustes na configuração Docker do ambiente</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/prjDevflow/prj_2dsm" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <p class="project-semester">3DSM – 1º Sem. 2026</p>
+                    <h4>DevFlow CRM</h4>
+                    <p class="project-description">
+                        Plataforma para centralizar, gerir e analisar leads comerciais da 1000 Valle
+                        Multimarcas, integrando canais de venda em um funil único com perfis
+                        hierárquicos de acesso.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">React 18</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Vite</span>
+                        <span class="tech-tag">TailwindCSS</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express</span>
+                        <span class="tech-tag">PostgreSQL 16</span>
+                        <span class="tech-tag">Prisma</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">JWT</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Atuação como desenvolvedor backend da equipe</li>
+                            <li>Implementação dos CRUDs e da containerização do banco de dados</li>
+                            <li>Refatoração da camada de acesso a dados</li>
+                            <li>Correções nos módulos de Times, Logs e exclusão de Clientes</li>
+                            <li>Documentação da API do backend</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/prjDevflow/prj_3dsm" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+            </div>
+
+            <h3 class="project-group-title" id="projects-professional">Profissionais</h3>
+            <div class="projects-grid">
+
+                <article class="project-card">
+                    <p class="project-semester">INPE &middot; Bolsa CNPq &middot; Em andamento</p>
+                    <h4>DescrEVE Fogo</h4>
+                    <p class="project-description">
+                        Assistente virtual que traduz perguntas feitas em português para consultas SQL
+                        sobre uma base geoespacial PostGIS de eventos de fogo, permitindo que quem não
+                        escreve SQL consulte dados de queimadas diretamente.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">spaCy</span>
+                        <span class="tech-tag">Word2Vec</span>
+                        <span class="tech-tag">scikit-learn</span>
+                        <span class="tech-tag">PostgreSQL 17</span>
+                        <span class="tech-tag">PostGIS</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Concepção e desenvolvimento do sistema como bolsista CNPq no INPE</li>
+                            <li>Motor de linguagem natural com embeddings duplos: modelo Word2Vec próprio do domínio e modelo geral do NILC</li>
+                            <li>Extração de entidades com spaCy e classificação de intenção por similaridade de cosseno</li>
+                            <li>Tradução de linguagem natural para SQL sobre base PostGIS</li>
+                            <li>API em FastAPI e painel interativo em Streamlit, ambos containerizados</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/MatheusSales95/chatbot-descritor" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <p class="project-semester">INPE &middot; Bolsa CNPq &middot; 2026</p>
+                    <h4>Pipeline de corpus do DescrEVE</h4>
+                    <p class="project-description">
+                        Pipeline de coleta e preparação do corpus de treinamento sobre queimadas,
+                        reunindo documentos PDF, portais de notícias e o painel TerraBrasilis de
+                        monitoramento da Amazônia em um único conjunto de dados.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Selenium</span>
+                        <span class="tech-tag">BeautifulSoup</span>
+                        <span class="tech-tag">trafilatura</span>
+                        <span class="tech-tag">pdfplumber</span>
+                        <span class="tech-tag">PyMuPDF</span>
+                        <span class="tech-tag">Tesseract OCR</span>
+                        <span class="tech-tag">NLTK</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Arquitetura em camadas separando coletores, processadores e armazenamento</li>
+                            <li>Controlador único orquestrando quatro modos de execução</li>
+                            <li>Extração de texto de PDFs com OCR e de artigos da web</li>
+                            <li>Raspagem do painel dinâmico TerraBrasilis com automação de navegador</li>
+                            <li>Limpeza, tokenização e compilação do corpus final de treinamento</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/MatheusSales95/WebScraper" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+            </div>
+
+            <h3 class="project-group-title" id="projects-personal">Pessoais e de pesquisa</h3>
+            <div class="projects-grid">
+
+                <article class="project-card">
+                    <p class="project-semester">INPE &middot; SER-347/CAP-419 &middot; 1º Sem. 2026</p>
+                    <h4>Composição temporal de data cubes Sentinel-2</h4>
+                    <p class="project-description">
+                        Trabalho final da disciplina de pós-graduação <em>Introdução à Programação com
+                        Dados Geoespaciais</em> do INPE. Estende o pacote Smosaic para receber a forma
+                        de composição como parâmetro, gerando composições temporais de imagens
+                        Sentinel-2 obtidas via API STAC do INPE.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">odc-stac</span>
+                        <span class="tech-tag">pystac-client</span>
+                        <span class="tech-tag">xarray</span>
+                        <span class="tech-tag">rioxarray</span>
+                        <span class="tech-tag">rasterio</span>
+                        <span class="tech-tag">GDAL</span>
+                        <span class="tech-tag">Dask</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Funções de composição por média, mediana, mínimo, máximo e n-ésimo valor</li>
+                            <li>Processamento independente por banda espectral</li>
+                            <li>Rastreio de proveniência: registro da data de origem de cada pixel selecionado</li>
+                            <li>Máscara de nuvens pela banda SCL e cálculo do índice NBR</li>
+                            <li>Exportação em GeoTIFF com reprojeção e tratamento de <em>nodata</em></li>
+                        </ul>
+                        <p class="project-credit">
+                            O pacote Smosaic, que serviu de base, foi originalmente desenvolvido por Gabriel.
+                        </p>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/MatheusSales95/pipeline_smosaic" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <p class="project-semester">1º Sem. 2026</p>
+                    <h4>Sobreposição de focos de fogo no Pantanal</h4>
+                    <p class="project-description">
+                        Análise espacial comparando polígonos de eventos de fogo com pixels de produto
+                        satelital de 1&nbsp;km no bioma Pantanal, em agosto de 2024, para medir
+                        concordância e discordância entre as duas fontes.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">GeoPandas</span>
+                        <span class="tech-tag">Shapely</span>
+                        <span class="tech-tag">leafmap</span>
+                        <span class="tech-tag">Jupyter</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Decomposição das duas bases em cinco grupos disjuntos, com conservação de área verificada</li>
+                            <li>Reprojeção para EPSG:6933 para cálculo de área equivalente</li>
+                            <li>Junção topológica e operações de interseção e diferença entre geometrias</li>
+                            <li>Métricas de concordância por IoU/Jaccard e de cobertura mútua</li>
+                            <li>Recorte pelos limites de bioma do IBGE e mapas interativos dos resultados</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/MatheusSales95/analise_descreve_dados_goes" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
+
+                <article class="project-card">
+                    <p class="project-semester">INPE &middot; CAP-335-3 &middot; 1º Sem. 2026</p>
+                    <h4>Detecção de áreas queimadas com aprendizado de máquina</h4>
+                    <p class="project-description">
+                        Trabalho final da disciplina de pós-graduação <em>CAP-335-3 &mdash; Aprendizado
+                        Computacional e Reconhecimento de Padrões</em> do INPE. Estudo comparativo de
+                        classificadores para identificar áreas queimadas em imagens Landsat 8 e 9 do
+                        Cerrado, enfrentando desbalanceamento de classes de até 33:1, autocorrelação
+                        espacial entre amostras e vazamento de atributos. Feito em equipe de quatro
+                        pessoas, com seis modelos avaliados.
+                    </p>
+                    <div class="project-technologies">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">scikit-learn</span>
+                        <span class="tech-tag">imbalanced-learn</span>
+                        <span class="tech-tag">Random Forest</span>
+                        <span class="tech-tag">SVM</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Jupyter</span>
+                        <span class="tech-tag">LaTeX</span>
+                    </div>
+                    <div class="project-contributions">
+                        <h5>Contribuição pessoal</h5>
+                        <ul>
+                            <li>Responsável pela linha de Random Forest, documentada em relatório próprio em formato IEEE</li>
+                            <li>Engenharia de atributos multitemporais: bandas pré e pós-evento e índices NDVI, NBR, dNBR e dNDVI</li>
+                            <li>Comparação de quatro estratégias de desbalanceamento: <em>class_weight</em>, <em>undersampling</em>, SMOTE e SMOTETomek</li>
+                            <li>Validação por blocos espaciais, para impedir que a autocorrelação inflasse o resultado</li>
+                            <li>Otimização de limiar por F₂, priorizando recall, e validação entre cenas distintas</li>
+                        </ul>
+                    </div>
+                    <p class="project-links">
+                        <a href="https://github.com/MatheusSales95/reconhecimento-de-padroes" class="project-link"
+                           target="_blank" rel="noopener noreferrer">Ver repositório</a>
+                    </p>
+                </article>
             </div>
         </section>
 
         <section id="skills" class="skills-section">
             <h2>Minhas Habilidades</h2>
-            <div class="skills-grid">
-                <span class="skill-tag">HTML5</span>
-                <span class="skill-tag">CSS3</span>
-                <span class="skill-tag">JavaScript (ES6+)</span>
-                <span class="skill-tag">Docker</span>
-                <span class="skill-tag">Typescript</span>
-                <span class="skill-tag">PostgreSQL</span>
-                <span class="skill-tag">React</span>
-                <span class="skill-tag">Node.js</span>
-                <span class="skill-tag">Git & GitHub</span>
+
+            <div class="skills-group">
+                <h3>Geoprocessamento</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">PostGIS</span>
+                    <span class="skill-tag">GeoPandas</span>
+                    <span class="skill-tag">rasterio</span>
+                    <span class="skill-tag">xarray</span>
+                    <span class="skill-tag">GDAL</span>
+                    <span class="skill-tag">STAC</span>
+                    <span class="skill-tag">Shapely</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <h3>Machine Learning e IA</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">scikit-learn</span>
+                    <span class="skill-tag">Random Forest</span>
+                    <span class="skill-tag">SVM</span>
+                    <span class="skill-tag">LLM</span>
+                    <span class="skill-tag">Fine-tuning</span>
+                    <span class="skill-tag">Jupyter</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <h3>Processamento de Linguagem Natural</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">spaCy</span>
+                    <span class="skill-tag">NLTK</span>
+                    <span class="skill-tag">Word2Vec</span>
+                    <span class="skill-tag">TF-IDF</span>
+                    <span class="skill-tag">Busca Semântica</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <h3>Backend</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Express</span>
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">SQLAlchemy</span>
+                    <span class="skill-tag">Prisma</span>
+                    <span class="skill-tag">Elixir</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <h3>Frontend</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">TypeScript</span>
+                    <span class="skill-tag">React</span>
+                </div>
+            </div>
+
+            <div class="skills-group">
+                <h3>Ferramentas</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Git &amp; GitHub</span>
+                    <span class="skill-tag">Streamlit</span>
+                </div>
             </div>
         </section>
 
-        <!-- NOVA SEÇÃO: Informações Adicionais -->
         <section id="additional-info" class="additional-info-section">
             <h2>Outras Informações</h2>
             <div class="info-grid">
                 <div class="info-card">
                     <h3>Formação Acadêmica</h3>
                     <div class="info-content">
-                        <p><strong>Análise e Desenvolvimento de Sistemas</strong></p>
-                        <p>Fatec Jacareí - Conclusão: Dez/2027</p>
+                        <p><strong>Desenvolvimento de Software Multiplataforma</strong></p>
+                        <p>Fatec Jacareí &middot; Ingresso: 1º sem. 2025 &middot; Conclusão prevista: dez/2027</p>
+                        <p><strong>Especialização em Análises Clínicas</strong></p>
+                        <p>Centro Universitário São Camilo</p>
+                        <p><strong>Bacharelado em Biologia</strong></p>
+                        <p>Universidade do Vale do Paraíba (UNIVAP)</p>
                     </div>
                 </div>
-                
+
                 <div class="info-card">
-                    <h3>Hobbies & Interesses</h3>
+                    <h3>Experiência Profissional</h3>
+                    <div class="info-content">
+                        <p><strong>Bolsista CNPq &middot; INPE</strong></p>
+                        <p>São José dos Campos &middot; Atualmente</p>
+                        <p><strong>Analista Clínico &middot; DASA</strong></p>
+                        <p>Cerca de quatro anos em um dos maiores laboratórios de análises clínicas do país</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Disciplinas de Pós-graduação</h3>
+                    <div class="info-content">
+                        <p>Disciplinas de pós-graduação cursadas:</p>
+                        <ul>
+                            <li><strong>INPE</strong> &mdash; SER-347 / CAP-419: Introdução à Programação com Dados Geoespaciais</li>
+                            <li><strong>INPE</strong> &mdash; CAP-335-3: Aprendizado Computacional e Reconhecimento de Padrões</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Hobbies &amp; Interesses</h3>
                     <div class="info-content">
                         <ul>
                             <li>Tecnologias emergentes</li>
@@ -71,19 +481,24 @@
             </div>
         </section>
 
-        <!-- NOVA SEÇÃO: Contatos -->
         <section id="contact" class="contact-section">
             <h2>Contatos</h2>
             <div class="contact-grid">
-                <a href="https://www.linkedin.com/in/matheusvmsales/" class="contact-link linkedin" target="_blank">
+                <a href="https://www.linkedin.com/in/matheusvmsales/" class="contact-link linkedin"
+                   target="_blank" rel="noopener noreferrer">
                     <span>LinkedIn</span>
                 </a>
-                <a href="https://github.com/MatheusSales95" class="contact-link github" target="_blank">
+                <a href="https://github.com/MatheusSales95" class="contact-link github"
+                   target="_blank" rel="noopener noreferrer">
                     <span>GitHub</span>
                 </a>
             </div>
         </section>
     </main>
+
+    <footer>
+        <p>Matheus Venancio Moreira Sales &middot; Desenvolvimento de Software Multiplataforma &middot; Fatec Jacareí</p>
+    </footer>
 
     <script type="module" src="js/main.js"></script>
 </body>

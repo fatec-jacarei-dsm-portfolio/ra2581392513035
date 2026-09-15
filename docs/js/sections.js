@@ -1,13 +1,18 @@
 /**
  * Classes para gerenciar seções do portfólio
- * Seguindo princípios SOLID e DDD
+ *
+ * O conteúdo do portfólio vive no HTML estático. Estas classes cuidam apenas
+ * do comportamento: revelar blocos conforme entram na viewport e oferecer uma
+ * API para acrescentar itens dinamicamente. Efeitos de hover são
+ * responsabilidade exclusiva do CSS, para que as duas camadas não disputem as
+ * mesmas propriedades.
  */
 
-import { DOMUtils, AnimationUtils, ScrollUtils } from './utils.js';
+import { DOMUtils, AnimationUtils } from './utils.js';
 import portfolioConfig from './config.js';
 
 /**
- * Classe base para seções (Interface Segregation Principle)
+ * Classe base para seções
  */
 class BaseSection {
     constructor(sectionId) {
@@ -16,34 +21,52 @@ class BaseSection {
         this.config = portfolioConfig.getSectionConfig(sectionId);
         this.isInitialized = false;
     }
-    
+
     /**
      * Inicializa a seção
      */
     init() {
         if (!this.element || this.isInitialized) return;
-        
+
         this.setupEventListeners();
         this.setupAnimations();
         this.isInitialized = true;
     }
-    
+
     /**
-     * Configura event listeners (deve ser implementado pelas subclasses)
+     * Configura event listeners (sobrescrito pelas subclasses quando preciso)
      */
     setupEventListeners() {
         // Implementação padrão vazia
     }
-    
+
     /**
-     * Configura animações (deve ser implementado pelas subclasses)
+     * Revela a seção inteira quando ela entra na viewport
      */
     setupAnimations() {
-        if (portfolioConfig.areAnimationsEnabled()) {
-            AnimationUtils.observeElements(`#${this.sectionId}`, (element) => {
-                AnimationUtils.fadeIn(element, this.config.animationDelay || 0);
-            });
-        }
+        this.revealOnScroll(`#${this.sectionId}`);
+    }
+
+    /**
+     * Revela os elementos de um seletor, escalonando o atraso entre eles.
+     * @param {string} selector - Seletor dos elementos
+     * @param {number} step - Atraso adicional por elemento, em ms
+     */
+    revealOnScroll(selector, step = 0) {
+        if (!portfolioConfig.areAnimationsEnabled()) return;
+
+        const baseDelay = this.config.animationDelay || 0;
+        const maxStaggered = 3;
+        let revealed = 0;
+
+        AnimationUtils.observeElements(selector, (element) => {
+            // O escalonamento tem teto de propósito: sem ele, um item que só
+            // aparece no fim da página acumularia centenas de milissegundos de
+            // atraso e ficaria invisível depois que o leitor já rolou até ele.
+            const delay = baseDelay + Math.min(revealed, maxStaggered) * step;
+            AnimationUtils.fadeIn(element, delay);
+            revealed += 1;
+        });
     }
 }
 
@@ -53,62 +76,27 @@ class BaseSection {
 class HeroSection extends BaseSection {
     constructor() {
         super('hero');
-        this.profilePicture = DOMUtils.querySelector('.profile-picture-container');
     }
-    
-    setupEventListeners() {
-        if (this.profilePicture) {
-            this.profilePicture.addEventListener('click', () => {
-                this.handleProfileClick();
-            });
-        }
-    }
-    
-    setupAnimations() {
-        super.setupAnimations();
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            // Animação especial para a foto de perfil
-            AnimationUtils.observeElements('.profile-picture-container', (element) => {
-                setTimeout(() => {
-                    element.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        element.style.transform = 'scale(1)';
-                    }, 200);
-                }, 500);
-            });
-        }
-    }
-    
-    /**
-     * Manipula clique na foto de perfil
-     */
-    handleProfileClick() {
-        if (portfolioConfig.areAnimationsEnabled()) {
-            this.profilePicture.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.profilePicture.style.transform = 'scale(1)';
-            }, 150);
-        }
-    }
-    
+
     /**
      * Atualiza informações do usuário
      * @param {object} userInfo - Informações do usuário
      */
     updateUserInfo(userInfo) {
+        if (!userInfo) return;
+
         const nameElement = DOMUtils.querySelector('.hero-content h1');
         const taglineElement = DOMUtils.querySelector('.tagline');
         const summaryElement = DOMUtils.querySelector('.summary-text');
-        
+
         if (nameElement && userInfo.name) {
             nameElement.textContent = `Olá, eu sou ${userInfo.name}`;
         }
-        
+
         if (taglineElement && userInfo.tagline) {
             taglineElement.textContent = userInfo.tagline;
         }
-        
+
         if (summaryElement && userInfo.summary) {
             summaryElement.textContent = userInfo.summary;
         }
@@ -121,130 +109,91 @@ class HeroSection extends BaseSection {
 class ProjectsSection extends BaseSection {
     constructor() {
         super('projects');
-        this.projectCards = DOMUtils.querySelectorAll('.project-card');
     }
-    
-    setupEventListeners() {
-        this.projectCards.forEach((card, index) => {
-            card.addEventListener('mouseenter', () => {
-                this.handleCardHover(card, true);
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                this.handleCardHover(card, false);
-            });
-            
-            const link = card.querySelector('.project-link');
-            if (link) {
-                link.addEventListener('click', (e) => {
-                    this.handleProjectClick(e, index);
-                });
-            }
-        });
-    }
-    
+
     setupAnimations() {
-        super.setupAnimations();
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            AnimationUtils.observeElements('.project-card', (element) => {
-                const index = Array.from(this.projectCards).indexOf(element);
-                AnimationUtils.fadeIn(element, index * 100);
-            });
-        }
+        this.revealOnScroll('.project-card', 100);
     }
-    
+
     /**
-     * Manipula hover nos cards de projeto
-     * @param {Element} card - Card do projeto
-     * @param {boolean} isHovering - Se está em hover
-     */
-    handleCardHover(card, isHovering) {
-        if (!portfolioConfig.areAnimationsEnabled()) return;
-        
-        if (isHovering) {
-            card.style.transform = 'translateY(-10px) scale(1.02)';
-        } else {
-            card.style.transform = 'translateY(0) scale(1)';
-        }
-    }
-    
-    /**
-     * Manipula clique em projeto
-     * @param {Event} event - Evento de clique
-     * @param {number} projectIndex - Índice do projeto
-     */
-    handleProjectClick(event, projectIndex) {
-        const link = event.target;
-        const href = link.getAttribute('href');
-        
-        // Se for um link placeholder (#), previne navegação
-        if (href === '#') {
-            event.preventDefault();
-            console.log(`Projeto ${projectIndex + 1} clicado - Configure o link real`);
-        }
-    }
-    
-    /**
-     * Adiciona novo projeto
+     * Acrescenta um projeto a um dos grupos da seção.
+     * Monta o cartão pela API do DOM (e não por innerHTML) para que qualquer
+     * texto recebido seja tratado como texto, nunca como marcação.
      * @param {object} projectData - Dados do projeto
+     * @param {string} [groupSelector] - Grade de destino
      */
-    addProject(projectData) {
-        const projectsGrid = DOMUtils.querySelector('.projects-grid');
-        if (!projectsGrid) return;
-        
-        const projectCard = document.createElement('article');
-        projectCard.className = 'project-card';
-        
-        let technologiesHTML = '';
-        if (projectData.technologies && projectData.technologies.length > 0) {
-            technologiesHTML = `
-                <div class="project-technologies">
-                    ${projectData.technologies.map(tech => 
-                        `<span class="tech-tag">${tech}</span>`
-                    ).join('')}
-                </div>
-            `;
+    addProject(projectData, groupSelector = '.projects-grid') {
+        const projectsGrid = DOMUtils.querySelector(groupSelector);
+        if (!projectsGrid || !projectData) return;
+
+        const card = document.createElement('article');
+        card.className = 'project-card';
+
+        if (projectData.semester) {
+            const semester = document.createElement('p');
+            semester.className = 'project-semester';
+            semester.textContent = projectData.semester;
+            card.appendChild(semester);
         }
-        
-        let contributionsHTML = '';
-        if (projectData.contributions && projectData.contributions.length > 0) {
-            contributionsHTML = `
-                <div class="project-contributions">
-                    <h4>Minhas Contribuições:</h4>
-                    <ul>
-                        ${projectData.contributions.map(contribution => 
-                            `<li>${contribution}</li>`
-                        ).join('')}
-                    </ul>
-                </div>
-            `;
+
+        const title = document.createElement('h4');
+        title.textContent = projectData.title || '';
+        card.appendChild(title);
+
+        const description = document.createElement('p');
+        description.className = 'project-description';
+        description.textContent = projectData.description || '';
+        card.appendChild(description);
+
+        if (projectData.technologies && projectData.technologies.length) {
+            const technologies = document.createElement('div');
+            technologies.className = 'project-technologies';
+
+            projectData.technologies.forEach(tech => {
+                const tag = document.createElement('span');
+                tag.className = 'tech-tag';
+                tag.textContent = tech;
+                technologies.appendChild(tag);
+            });
+
+            card.appendChild(technologies);
         }
-        
-        projectCard.innerHTML = `
-            <h3>${projectData.title}</h3>
-            <p class="project-description">${projectData.description}</p>
-            ${technologiesHTML}
-            ${contributionsHTML}
-            <a href="${projectData.link}" class="project-link" target="_blank">Ver Projeto</a>
-        `;
-        
-        projectsGrid.appendChild(projectCard);
-        this.setupProjectCard(projectCard);
-    }
-    
-    /**
-     * Configura um card de projeto específico
-     * @param {Element} card - Card do projeto
-     */
-    setupProjectCard(card) {
-        card.addEventListener('mouseenter', () => {
-            this.handleCardHover(card, true);
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            this.handleCardHover(card, false);
-        });
+
+        if (projectData.contributions && projectData.contributions.length) {
+            const contributions = document.createElement('div');
+            contributions.className = 'project-contributions';
+
+            const heading = document.createElement('h5');
+            heading.textContent = 'Contribuição pessoal';
+            contributions.appendChild(heading);
+
+            const list = document.createElement('ul');
+            projectData.contributions.forEach(contribution => {
+                const item = document.createElement('li');
+                item.textContent = contribution;
+                list.appendChild(item);
+            });
+
+            contributions.appendChild(list);
+            card.appendChild(contributions);
+        }
+
+        if (projectData.link) {
+            const links = document.createElement('p');
+            links.className = 'project-links';
+
+            const link = document.createElement('a');
+            link.className = 'project-link';
+            link.href = projectData.link;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'Ver repositório';
+
+            links.appendChild(link);
+            card.appendChild(links);
+        }
+
+        projectsGrid.appendChild(card);
     }
 }
 
@@ -254,68 +203,26 @@ class ProjectsSection extends BaseSection {
 class SkillsSection extends BaseSection {
     constructor() {
         super('skills');
-        this.skillTags = DOMUtils.querySelectorAll('.skill-tag');
     }
-    
-    setupEventListeners() {
-        this.skillTags.forEach(tag => {
-            tag.addEventListener('click', () => {
-                this.handleSkillClick(tag);
-            });
-        });
-    }
-    
+
     setupAnimations() {
-        super.setupAnimations();
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            AnimationUtils.observeElements('.skill-tag', (element) => {
-                const index = Array.from(this.skillTags).indexOf(element);
-                AnimationUtils.fadeIn(element, index * 50);
-            });
-        }
+        this.revealOnScroll('.skills-group', 80);
     }
-    
-    /**
-     * Manipula clique em habilidade
-     * @param {Element} tag - Tag da habilidade
-     */
-    handleSkillClick(tag) {
-        const skillName = tag.textContent;
-        console.log(`Habilidade clicada: ${skillName}`);
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            tag.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                tag.style.transform = 'scale(1)';
-            }, 150);
-        }
-    }
-    
+
     /**
      * Adiciona nova habilidade
      * @param {string} skillName - Nome da habilidade
+     * @param {string} [groupSelector] - Grupo de destino
      */
-    addSkill(skillName) {
-        const skillsGrid = DOMUtils.querySelector('.skills-grid');
-        if (!skillsGrid) return;
-        
+    addSkill(skillName, groupSelector = '.skills-grid') {
+        const skillsGrid = DOMUtils.querySelector(groupSelector);
+        if (!skillsGrid || !skillName) return;
+
         const skillTag = document.createElement('span');
         skillTag.className = 'skill-tag';
         skillTag.textContent = skillName;
-        
+
         skillsGrid.appendChild(skillTag);
-        this.setupSkillTag(skillTag);
-    }
-    
-    /**
-     * Configura uma tag de habilidade específica
-     * @param {Element} tag - Tag da habilidade
-     */
-    setupSkillTag(tag) {
-        tag.addEventListener('click', () => {
-            this.handleSkillClick(tag);
-        });
     }
 }
 
@@ -325,45 +232,10 @@ class SkillsSection extends BaseSection {
 class AdditionalInfoSection extends BaseSection {
     constructor() {
         super('additional-info');
-        this.infoCards = DOMUtils.querySelectorAll('.info-card');
     }
-    
-    setupEventListeners() {
-        this.infoCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                this.handleCardHover(card, true);
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                this.handleCardHover(card, false);
-            });
-        });
-    }
-    
+
     setupAnimations() {
-        super.setupAnimations();
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            AnimationUtils.observeElements('.info-card', (element) => {
-                const index = Array.from(this.infoCards).indexOf(element);
-                AnimationUtils.fadeIn(element, index * 100);
-            });
-        }
-    }
-    
-    /**
-     * Manipula hover nos cards de informação
-     * @param {Element} card - Card de informação
-     * @param {boolean} isHovering - Se está em hover
-     */
-    handleCardHover(card, isHovering) {
-        if (!portfolioConfig.areAnimationsEnabled()) return;
-        
-        if (isHovering) {
-            card.style.transform = 'translateY(-5px)';
-        } else {
-            card.style.transform = 'translateY(0)';
-        }
+        this.revealOnScroll('.info-card', 100);
     }
 }
 
@@ -373,45 +245,10 @@ class AdditionalInfoSection extends BaseSection {
 class ContactSection extends BaseSection {
     constructor() {
         super('contact');
-        this.contactLinks = DOMUtils.querySelectorAll('.contact-link');
     }
-    
-    setupEventListeners() {
-        this.contactLinks.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                this.handleLinkHover(link, true);
-            });
-            
-            link.addEventListener('mouseleave', () => {
-                this.handleLinkHover(link, false);
-            });
-        });
-    }
-    
+
     setupAnimations() {
-        super.setupAnimations();
-        
-        if (portfolioConfig.areAnimationsEnabled()) {
-            AnimationUtils.observeElements('.contact-link', (element) => {
-                const index = Array.from(this.contactLinks).indexOf(element);
-                AnimationUtils.fadeIn(element, index * 100);
-            });
-        }
-    }
-    
-    /**
-     * Manipula hover nos links de contato
-     * @param {Element} link - Link de contato
-     * @param {boolean} isHovering - Se está em hover
-     */
-    handleLinkHover(link, isHovering) {
-        if (!portfolioConfig.areAnimationsEnabled()) return;
-        
-        if (isHovering) {
-            link.style.transform = 'translateY(-5px) scale(1.05)';
-        } else {
-            link.style.transform = 'translateY(0) scale(1)';
-        }
+        this.revealOnScroll('.contact-link', 100);
     }
 }
 

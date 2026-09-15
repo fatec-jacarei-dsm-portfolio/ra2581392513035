@@ -67,23 +67,26 @@ class DOMUtils {
 
 class AnimationUtils {
     /**
-     * Aplica animação de fade in
-     * @param {Element} element - Elemento a ser animado
-     * @param {number} delay - Delay da animação em ms
+     * Revela um elemento marcado com a classe .reveal.
+     * A animação em si é descrita no CSS: aqui só alternamos a classe, para
+     * que CSS e JavaScript não disputem as mesmas propriedades.
+     * @param {Element} element - Elemento a ser revelado
+     * @param {number} delay - Atraso em ms
      */
     static fadeIn(element, delay = 0) {
         if (!element) return;
-        
+
         setTimeout(() => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(20px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
-            requestAnimationFrame(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            });
+            DOMUtils.addClass(element, 'is-visible');
         }, delay);
+    }
+
+    /**
+     * Marca um elemento como animável antes de observá-lo.
+     * @param {Element} element - Elemento a preparar
+     */
+    static prepare(element) {
+        DOMUtils.addClass(element, 'reveal');
     }
     
     /**
@@ -93,9 +96,17 @@ class AnimationUtils {
      */
     static observeElements(selector, callback) {
         const elements = DOMUtils.querySelectorAll(selector);
-        
+
         if (!elements.length) return;
-        
+
+        // Sem IntersectionObserver, revela tudo de uma vez em vez de esconder.
+        if (!('IntersectionObserver' in window)) {
+            elements.forEach(element => callback(element));
+            return;
+        }
+
+        elements.forEach(element => AnimationUtils.prepare(element));
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -121,11 +132,13 @@ class ScrollUtils {
     static smoothScrollTo(selector, offset = 0) {
         const element = DOMUtils.querySelector(selector);
         if (!element) return;
-        
-        const elementPosition = element.offsetTop - offset;
-        
+
+        // getBoundingClientRect considera a posição real na página, inclusive
+        // dentro de contêineres aninhados — offsetTop não.
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset - offset;
+
         window.scrollTo({
-            top: elementPosition,
+            top: Math.max(elementPosition, 0),
             behavior: 'smooth'
         });
     }

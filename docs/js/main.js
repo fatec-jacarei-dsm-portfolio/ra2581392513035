@@ -23,8 +23,6 @@ class PortfolioApp {
             this.setupGlobalEventListeners();
             this.setupScrollBehavior();
             this.isInitialized = true;
-            
-            console.log('Portfólio inicializado com sucesso!');
         } catch (error) {
             console.error('Erro ao inicializar portfólio:', error);
         }
@@ -109,8 +107,7 @@ class PortfolioApp {
      * Manipula redimensionamento da janela
      */
     handleWindowResize() {
-        // Atualiza configurações responsivas se necessário
-        console.log('Janela redimensionada');
+        // Reservado para ajustes responsivos que dependam de medição em JS.
     }
     
     /**
@@ -225,41 +222,9 @@ app.init();
 // Expõe o app globalmente para facilitar debugging e extensões
 window.PortfolioApp = app;
 
-// Exemplo de como usar as funcionalidades (pode ser removido em produção)
-window.addEventListener('load', () => {
-    // atualização de dados do usuário
-    app.updateUserData({
-        name: 'Matheus Sales',
-        summary: 'Sou Analista Clínico em transição de carreira para Desenvolvedor de Sistemas. Tenho experiência com análise de dados, atenção aos detalhes e resolução de problemas — habilidades que agora aplico na programação. Estudo tecnologias como HTML, CSS, JavaScript e Node.js, com foco em desenvolvimento web e APIs. Busco minha primeira oportunidade na área tech para aplicar meu conhecimento, crescer profissionalmente e contribuir com soluções eficientes e bem estruturadas.'
-    });
-    
-    // adição de projeto
-    app.addProject({
-        title: 'Sistema web acadêmico',
-        description: 'Desenvolver um sistema web para que a comunidade acadêmica possa consultar os horários das aulas',
-        link: 'https://github.com/prjDevflow/prj_1sem_client',
-        technologies: ['HTML5', 'CSS3', 'JavaScript', 'Node.js', 'MySQL'],
-        contributions: [
-            'Desenvolvimento da relação Entidade-Relacionamento',
-            'Implementação da lógica de negócio no backend',
-            'Integração com banco de dados MySQL',
-            'Otimização de performance das consultas'
-        ]
-    });
-    app.addProject({
-        title: 'Devflow Analytics - Plataforma de Dados Limnológicos',
-        description: 'Uma plataforma web intuitiva e de alto desempenho para visualização e análise de dados de balanço de carbono em reservatórios, desenvolvida para Furnas Centrais Elétricas S.A. e instituições parceiras (INPE, UFRJ, UFJF, IIE).',
-        link: 'https://github.com/prjDevflow/prj_2dsm',
-        technologies: ['React', 'TypeScript','PostgreSQL', 'Docker', 'Node.js'],
-        contributions: [
-            'Criação de visualizações de dados interativas',
-            'Implementação de Procedures',
-            'Análise de dados do banco de dados fornecido',
-        ]
-    });
-    
-    // Exemplo de adição de habilidade
-    // app.addSkill('Vue.js');
-});
+// O conteúdo do portfólio (apresentação, projetos e habilidades) vive no HTML
+// estático, para que a página funcione sem depender da execução do JavaScript.
+// Os métodos updateUserData, addProject e addSkill seguem disponíveis para
+// extensões futuras via console ou scripts adicionais.
 
 export default app;

@@ -26,7 +26,7 @@ class PortfolioConfig {
             hero: { enabled: true, animationDelay: 100 },
             projects: { enabled: true, animationDelay: 200 },
             skills: { enabled: true, animationDelay: 300 },
-            additionalInfo: { enabled: true, animationDelay: 400 },
+            'additional-info': { enabled: true, animationDelay: 400 },
             contact: { enabled: true, animationDelay: 500 }
         };
     }
